@@ -2,21 +2,57 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   flex: 1;
-
+  gap: 50px;
+  
   .boardRow {
-    height: 70px;
+    flex: 1;
+    height: 75px;
     display: flex;
-    gap: 5px
+    gap: 5px;
   }
 
   .boardRowTile {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 62px;
-    width: 62px;
+    display: flex;
+    width: min(12vw, 65px);
+    height: min(12vw, 65px);
     border: solid 2px;
     border-color: aliceblue;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .keyboardRow {
+    display: flex;
+    justify-content: center;
+  }
+
+  .key {
+    flex: 1;
+    display: flex;
+    height: 50px;
+    min-width: 45px;
+    background-color: grey;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+
+  .spacer {
+    flex:1.1
+  }
+
+  .large.key {
+    min-width: 67px;
   }
 }
