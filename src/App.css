@@ -46,6 +46,8 @@ main {
     color: white;
     font-weight: 600;
     margin-right: 6px;
+    outline: 0px;
+    border: 1px solid rgb(183, 183, 183);
   }
 
   .spacer {

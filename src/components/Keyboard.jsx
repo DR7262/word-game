@@ -1,41 +1,31 @@
-export default function Keyboard() {
+const rows = [
+  ["Q","W","E","R","T","Y","U","I","O","P"],
+  ["A","S","D","F","G","H","J","K","L"],
+  ["ENTER","Z","X","C","V","B","N","M","DEL"]
+];
+
+export default function Keyboard({ onKeyPress }) {
   return (
     <div className="keyboard">
-        <div className="keyboardRow">
-            <div className="key">Q</div>
-            <div className="key">W</div>
-            <div className="key">E</div>
-            <div className="key">R</div>
-            <div className="key">T</div>
-            <div className="key">Y</div>
-            <div className="key">U</div>
-            <div className="key">I</div>
-            <div className="key">O</div>
-            <div className="key">P</div>
-        </div>
-        <div className="keyboardRow">
-            <div className="spacer"></div>
-            <div className="key">A</div>
-            <div className="key">S</div>
-            <div className="key">D</div>
-            <div className="key">F</div>
-            <div className="key">G</div>
-            <div className="key">H</div>
-            <div className="key">K</div>
-            <div className="key">L</div>
-            <div className="spacer"></div>
-        </div>
-        <div className="keyboardRow">
-            <div className="large key">ENTER</div>
-            <div className="key">Z</div>
-            <div className="key">X</div>
-            <div className="key">C</div>
-            <div className="key">V</div>
-            <div className="key">B</div>
-            <div className="key">N</div>
-            <div className="key">M</div>
-            <div className="large key">DEL</div>
-        </div>
+        {rows.map((row, rowIndex) => (
+            <div key ={rowIndex} className="keyboardRow">
+                {rowIndex === 1 && (
+                    <div className="spacer"></div>
+                )}                  
+                {row.map((key) => (
+                    <button
+                        key={key}
+                        onClick={() => onKeyPress(key)}
+                        className={`key ${key === "ENTER" || key === "DEL" ? "large" : ""}`}
+                    > 
+                        {key === "DEL" ? "⌫" : key}
+                    </button>
+                ))}
+                {rowIndex === 1 && (
+                    <div className="spacer"></div>
+                )} 
+            </div>
+        ))}
     </div>
   )
 }
