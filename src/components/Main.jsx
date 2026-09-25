@@ -78,8 +78,7 @@ export default function Main() {
       }  
     } else if (currentGuess.length < 5) {
       setCurrentGuess(currentGuess + key)
-    }
-    
+    }    
   }
 
   return (
