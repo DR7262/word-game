@@ -59,6 +59,8 @@ export default function Main() {
       //loop to check for corrects and absents
       currentGuessLetters.forEach((letter, index) => {
         if (targetLetters.includes(letter) === false) {
+          newGuesses[currentRow][index].letter = letter
+          newGuesses[currentRow][index].state = 'absent'
           setKeyStates(previousStates => {
             const newKeyStates = {...previousStates}
             newKeyStates[letter] = 'absent'
@@ -97,7 +99,7 @@ export default function Main() {
     if (key === "DEL") {
       setCurrentGuess(currentGuess.slice(0, -1))
     } else if (key === "ENTER") {
-      if (currentGuess.length === 5) {
+      if (currentGuess.length === targetWord.length) {
         evaluateCurrentGuess()     
         setGuesses(previousGuesses => {          
           const newGuesses = [...previousGuesses]
@@ -109,7 +111,7 @@ export default function Main() {
         setCurrentGuess("")
         setCurrentRow(currentRow + 1)
       }  
-    } else if (currentGuess.length < 5) {
+    } else if (currentGuess.length < targetWord.length) {
       setCurrentGuess(currentGuess + key)
     }    
   }
