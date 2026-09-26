@@ -16,11 +16,15 @@ export default function Main() {
   const [currentGuess, setCurrentGuess] = useState("")
   const [currentRow, setCurrentRow] = useState(0)
 
-  const targetWord = "APPLE"
+  const targetWord = "HAPPY"
   const maxGuesses = 5
 
   const [guesses, setGuesses] = useState(() => {
-    return Array(maxGuesses).fill(null).map(() => Array(targetWord.length).fill("")
+    return Array(maxGuesses).fill(null).map(() => 
+      Array(targetWord.length).fill(null).map(() => ({
+        letter:'',
+        state: 'unused'
+      }))
   )})
 
   const [keyStates, setKeyStates] = useState(() => {
@@ -35,33 +39,58 @@ export default function Main() {
 
   function evaluateCurrentGuess() {
     const targetLetters = targetWord.split("")
+    const currentGuessLetters = currentGuess.split("")
+    const newGuesses = [...guesses]
+    
     if (currentGuess === targetWord) {
-      console.log(true) //placeholder code for setting winState
+      currentGuessLetters.forEach((letter, index) => {
+        newGuesses[currentRow][index].letter = letter
+        newGuesses[currentRow][index].state = 'correct'
+        setKeyStates(previousStates => {
+          const newKeyStates = {...previousStates}
+          newKeyStates[letter] = 'correct'
+          return newKeyStates
+        })
+      //TODO set winstate, disable keyboard
+      })      
     } else {
-      currentGuess.split("").map((letter, index) => {
+      let letterCounts = [...targetLetters]
+
+      //loop to check for corrects and absents
+      currentGuessLetters.forEach((letter, index) => {
         if (targetLetters.includes(letter) === false) {
           setKeyStates(previousStates => {
             const newKeyStates = {...previousStates}
             newKeyStates[letter] = 'absent'
-            return newKeyStates            
+            return newKeyStates
           })
-        } else if (targetLetters.indexOf(letter) === index) {
+        } else if (letter === targetLetters[index]) {
+          letterCounts[index] = ""
+          newGuesses[currentRow][index].letter = letter
+          newGuesses[currentRow][index].state = 'correct'
           setKeyStates(previousStates => {
             const newKeyStates = {...previousStates}
             newKeyStates[letter] = 'correct'
-            console.log(newKeyStates)
-            return newKeyStates
-          })  
-        } else {
-          setKeyStates(previousStates => {
-            const newKeyStates = {...previousStates}
-            newKeyStates[letter] = 'present'
-            console.log(newKeyStates)
             return newKeyStates
           })
         }
       })
-    }
+
+      //loop to check for presents
+      currentGuessLetters.forEach((letter, index) => {
+        if (letterCounts.includes(letter) === true) {
+          let spliceTarget = letterCounts.indexOf(letter)
+          letterCounts[spliceTarget] = ""
+          setKeyStates(previousStates => {
+            const newKeyStates = {...previousStates}
+            newKeyStates[letter] = newKeyStates[letter] !== 'correct' ? 'present' : newKeyStates[letter]
+            return newKeyStates
+          })
+          newGuesses[currentRow][index].letter = letter
+          newGuesses[currentRow][index].state = 'present'
+        } 
+      })
+    }   
   }
 
   function handleKeyboardInput(key) {
@@ -69,10 +98,14 @@ export default function Main() {
       setCurrentGuess(currentGuess.slice(0, -1))
     } else if (key === "ENTER") {
       if (currentGuess.length === 5) {
-        evaluateCurrentGuess()
-        const newGuesses = [...guesses]
-        newGuesses[currentRow] = currentGuess.split("")
-        setGuesses(newGuesses)
+        evaluateCurrentGuess()     
+        setGuesses(previousGuesses => {          
+          const newGuesses = [...previousGuesses]
+          currentGuess.split("").forEach((letter, index) => {
+            newGuesses[currentRow][index].letter = letter
+          })
+          return newGuesses
+        })
         setCurrentGuess("")
         setCurrentRow(currentRow + 1)
       }  

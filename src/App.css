@@ -46,7 +46,7 @@ main {
     border-color: var(--present-color);
   }
 
-  .boardRowTile[data-state="correct"] {
+  .boardRowTile[data-state~="correct"] {
     background-color: var(--correct-color);
     border-color: var(--correct-color);
   }

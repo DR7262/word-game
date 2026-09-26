@@ -17,9 +17,9 @@ export default function Board({ guesses, currentGuess, currentRow, keyStates }) 
               return (
               <div className="boardRowTile" 
                 key={tileIndex} 
-                data-state={keyStates[letter]}
+                data-state={guesses[rowIndex][tileIndex].state}
               >
-                {guesses[rowIndex][tileIndex]}
+                {guesses[rowIndex][tileIndex].letter}
               </div>
               )
             }
