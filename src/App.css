@@ -12,6 +12,12 @@ main {
   flex: 1;
   gap: 50px;
   
+  .board {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
   .boardRow {
     flex: 1;
     height: 75px;
@@ -52,6 +58,9 @@ main {
   }
 
   .keyboard {
+    width: min(100%, 500px);
+    padding: 0 8px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -60,23 +69,27 @@ main {
   .keyboardRow {
     display: flex;
     justify-content: center;
+    gap: 4px;
   }
 
   .key {
     flex: 1;
     display: flex;
-    height: 50px;
-    min-width: 45px;
+    height: clamp(42px, 11vw, 58px);
+    padding: 0;
     background-color: rgb(229, 229, 229);
+    border: 1px solid rgb(183, 183, 183);
     border-radius: 4px;
     align-items: center;
     justify-content: center;
     color: var(--key-font-color);
     font-weight: 600;
     font-size: clamp(1rem, 5vw, 1.5rem);
-    margin-right: 6px;
     outline: 0px;
-    border: 1px solid rgb(183, 183, 183);
+  }
+
+  .key:active {
+    transform: scale(0.95);
   }
 
   .key[data-key="ENTER"] {
@@ -102,10 +115,10 @@ main {
   }
 
   .spacer {
-    flex:1.1
+    flex:.20
   }
 
   .large.key {
-    min-width: 67px;
+    flex: 1.5
   }
 }
