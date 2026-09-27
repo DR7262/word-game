@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function Keyboard({ onKeyPress, rows, keyStates }) {
+export default function Keyboard({ onKeyPress, rows, keyStates, winState }) {
   useEffect(() => {
     function handleKeyDown(event) {
       if (event.key === "Backspace" || event.key === "Delete") {
@@ -12,7 +12,10 @@ export default function Keyboard({ onKeyPress, rows, keyStates }) {
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown)
+    if (winState === false) {
+      window.addEventListener("keydown", handleKeyDown)
+    }
+
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
@@ -30,6 +33,7 @@ export default function Keyboard({ onKeyPress, rows, keyStates }) {
             <button
               key={key}
               onClick={() => onKeyPress(key)}
+              disabled={winState}
               className={`${key === "ENTER" || key === "DEL" ? "key large" : "key"}`}
               data-state={keyStates[key]}
               data-key={key}

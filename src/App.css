@@ -13,9 +13,27 @@ main {
   gap: 50px;
   
   .board {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .winPopup {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    color: black;
+    border: 1px grey solid;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .winPopup[disabled] {
+    background-color: blue;
+    visibility: hidden;
   }
 
   .boardRow {
@@ -88,7 +106,7 @@ main {
     outline: 0px;
   }
 
-  .key:active {
+  .key:not([disabled]):active {
     transform: scale(0.95);
   }
 

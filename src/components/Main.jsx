@@ -15,6 +15,7 @@ const letterStates = letters
 export default function Main() {
   const [currentGuess, setCurrentGuess] = useState("")
   const [currentRow, setCurrentRow] = useState(0)
+  const [winState, setWinState] = useState(false)
 
   const targetWord = "HAPPY"
   const maxGuesses = 5
@@ -50,9 +51,10 @@ export default function Main() {
           const newKeyStates = {...previousStates}
           newKeyStates[letter] = 'correct'
           return newKeyStates
-        })
-      //TODO set winstate, disable keyboard
-      })      
+        })      
+      })
+      const newWinState = true
+      setWinState(newWinState)
     } else {
       let letterCounts = [...targetLetters]
 
@@ -123,12 +125,14 @@ export default function Main() {
         currentGuess={currentGuess} 
         guesses={guesses} 
         currentRow={currentRow}
-        keyStates={keyStates}
+        keyStates={keyStates}    
+        winState={winState}    
       />
       <Keyboard 
         onKeyPress={handleKeyboardInput} 
         rows={letters} 
         keyStates={keyStates}
+        winState={winState}
       />
     </main>
   )

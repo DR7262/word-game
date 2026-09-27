@@ -1,6 +1,7 @@
-export default function Board({ guesses, currentGuess, currentRow, keyStates }) {
+export default function Board({ guesses, currentGuess, currentRow, keyStates, winState }) {
   return (
     <div className="board">
+      <div className="winPopup" disabled={winState === false}>Correct!</div>
       {guesses.map((row, rowIndex) => (
         <div className="boardRow" key={rowIndex} rowindex={rowIndex}>
           {guesses[rowIndex].map((letter, tileIndex) => {
