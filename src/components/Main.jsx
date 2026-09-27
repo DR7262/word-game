@@ -58,16 +58,9 @@ export default function Main() {
 
       //loop to check for corrects and absents
       currentGuessLetters.forEach((letter, index) => {
-        if (targetLetters.includes(letter) === false) {
-          newGuesses[currentRow][index].letter = letter
-          newGuesses[currentRow][index].state = 'absent'
-          setKeyStates(previousStates => {
-            const newKeyStates = {...previousStates}
-            newKeyStates[letter] = 'absent'
-            return newKeyStates
-          })
-        } else if (letter === targetLetters[index]) {
+         if (letter === targetLetters[index]) {
           letterCounts[index] = ""
+          currentGuessLetters[index] = ""
           newGuesses[currentRow][index].letter = letter
           newGuesses[currentRow][index].state = 'correct'
           setKeyStates(previousStates => {
@@ -80,7 +73,15 @@ export default function Main() {
 
       //loop to check for presents
       currentGuessLetters.forEach((letter, index) => {
-        if (letterCounts.includes(letter) === true) {
+        if (letterCounts.includes(letter) === false) {
+          newGuesses[currentRow][index].letter = letter
+          newGuesses[currentRow][index].state = newGuesses[currentRow][index].state === 'unused' ? 'absent' : newGuesses[currentRow][index].state
+          setKeyStates(previousStates => {
+            const newKeyStates = {...previousStates}
+            newKeyStates[letter] = newKeyStates[letter] === 'unused' ? 'absent' : newKeyStates[letter]
+            return newKeyStates
+          })
+        } else if (letterCounts.includes(letter) === true) {
           let spliceTarget = letterCounts.indexOf(letter)
           letterCounts[spliceTarget] = ""
           setKeyStates(previousStates => {
@@ -89,7 +90,7 @@ export default function Main() {
             return newKeyStates
           })
           newGuesses[currentRow][index].letter = letter
-          newGuesses[currentRow][index].state = 'present'
+          newGuesses[currentRow][index].state = newGuesses[currentRow][index].state !== 'correct' ? 'present' : newGuesses[currentRow][index].state
         } 
       })
     }   
