@@ -1,3 +1,13 @@
+
+@keyframes messageFade {
+  0%, 70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 main {
   --board-font-color: white;
   --key-font-color: black;
@@ -18,8 +28,8 @@ main {
     flex-direction: column;
     gap: 5px;
   }
-
-  .winPopup {
+  
+  .gameMessage {
     position: absolute;
     top: -40px;
     left: 50%;
@@ -29,11 +39,7 @@ main {
     border: 1px grey solid;
     border-radius: 5px;
     padding: 10px;
-  }
-
-  .winPopup[disabled] {
-    background-color: blue;
-    visibility: hidden;
+    animation: messageFade 2.5s ease forwards;
   }
 
   .boardRow {
@@ -45,8 +51,8 @@ main {
 
   .boardRowTile {
     display: flex;
-    width: min(12vw, 65px);
-    height: min(12vw, 65px);
+    width: min(9vw, 65px);
+    height: min(9vw, 65px);
     border: solid 2px;
     border-color: aliceblue;
     align-items: center;

@@ -1,7 +1,15 @@
-export default function Board({ guesses, currentGuess, currentRow, keyStates, winState }) {
+export default function Board({ guesses, currentGuess, currentRow, keyStates, gameMessage }) {
   return (
     <div className="board">
-      <div className="winPopup" disabled={winState === false}>Correct!</div>
+      {gameMessage && (
+        <div key={gameMessage}
+          className={`gameMessage ${gameMessage}`}>
+          {gameMessage === "win" && "Correct! You won!"}
+          {gameMessage === "invalid" && "Not in word list"}
+          {gameMessage === "incomplete" && "Not enough letters"}
+          {gameMessage === "lost" && "Better luck next time!"}
+        </div>
+      )}
       {guesses.map((row, rowIndex) => (
         <div className="boardRow" key={rowIndex} rowindex={rowIndex}>
           {guesses[rowIndex].map((letter, tileIndex) => {
