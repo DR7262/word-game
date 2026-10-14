@@ -20,7 +20,7 @@ export default function Main() {
   const [gameMessage, setGameMessage] = useState("")
 
   const targetWord = getRandomGuess()
-  const maxGuesses = 5
+  const maxGuesses = 6
 
   const [guesses, setGuesses] = useState(() => {
     return Array(maxGuesses).fill(null).map(() => 
