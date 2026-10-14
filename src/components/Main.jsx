@@ -60,7 +60,7 @@ export default function Main() {
 
     //clamp value between length of answers.txt
     const min = 0
-    const max = guessList.length
+    const max = lines.length
     const randomId = Math.floor(random() * (max - min +1)) + min;
     const word = lines[randomId]
 
